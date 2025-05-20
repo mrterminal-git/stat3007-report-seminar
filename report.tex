@@ -1,0 +1,184 @@
+\documentclass[12pt]{article}
+\input{preamble}
+
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Code}{Verbatim}{
+    fontsize=\footnotesize, % Adjust font size
+    breaklines=true,        % Enable line wrapping
+    breakanywhere=true      % Allow breaking anywhere
+}
+
+\begin{document}
+\begin{center}
+
+{\Large  {\bf DEEP LEARNING (STAT3007/7007)}
+
+Report - Semester 1, 2025.
+
+% Paper title here
+\textbf{Statistical Arbitrage and Deep Learning in the European Electricity Market} \\
+
+\vspace{20pt}
+
+{\large
+\textbf{Authors:} \\
+Filip Orestav \textbf{(s4931699)} \\
+Hans Stemshaug \textbf{(s4906042)} \\
+Nila Saravana \textbf{(s4877379)} \\
+Volter Entoma \textbf{(s4478271)} \\
+Weiming Liang \textbf{(s4637548)}
+}
+
+}
+\end{center}
+
+\vspace{20pt}
+
+\textbf{1. Introduction}
+\\
+Statistical Arbitrage is a trading strategy that aims to profit from the relative price movements of two or more assets. It involves identifying mispricings in the market and taking advantage of them by simultaneously buying and selling the assets. Statistical arbitrage is based on the idea that pairs or groups of historically similar stocks are expected to maintain their statistical relationship in the future, allowing traders to exploit temporary deviations from this relationship. The goal for this project is to develop a deep learning model that can apply Statistical Arbitrage to identify unfairly priced electricity prices in the European market, and to create a trading strategy to create a profitable trading strategy.
+\\
+
+\vspace{20pt}
+
+\textbf{2. Theory}
+\\
+\textbf{2.1. Statistical Arbitrage: Cointegration}
+\\
+Cointegration is a statistical property of time series variables that indicates a long-term equilibrium relationship between them, even though the individual series may be non-stationary. In statistical arbitrage, cointegration is used to identify portfolios where a linear combination of asset prices or returns results in a stationary residual, enabling mean-reverting trading strategies. \\
+
+Consider $N$ assets with log cumulative returns $R_{1,t}, R_{2,t}, \ldots, R_{N,t}$. These assets are said to be \textit{cointegrated} if there exists a vector $\boldsymbol{\beta} = (\beta_1, \beta_2, \ldots, \beta_N)$ such that the linear combination
+\[
+e_t = \beta_1 R_{1,t} + \beta_2 R_{2,t} + \cdots + \beta_N R_{N,t}
+\]
+or, more compactly,
+\[
+e_t = \boldsymbol{\beta}^\top \mathbf{R}_t
+\]
+where $\mathbf{R}_t = (R_{1,t}, R_{2,t}, \ldots, R_{N,t})^\top$, is a \textit{stationary process}.
+\\
+
+The stationary residual $e_t$ oscillates around a constant mean. When $e_t$ deviates significantly from the mean, traders take positions assuming it will revert.
+\begin{itemize}
+  \item \textbf{Long} the undervalued assets.
+  \item \textbf{Short} the overvalued assets.
+\end{itemize}
+
+For example, if $e_t > \theta$, where $\theta$ is a threshold, it indicates that the portfolio is overvalued. Traders would short the portfolio, expecting the price to revert to its mean. Conversely, if $e_t < -\theta$, it indicates that the portfolio is undervalued, and traders would go long on the portfolio.
+\\
+
+The key assumption of cointegration is that the linear combination of asset prices or returns is stationary, even if the individual series are not. This means that the spread between the assets will revert to its mean over time, allowing traders to profit from temporary deviations from this mean.
+\\
+
+In the context of Eurpoean electricity prices, we expect the prices in Europe to be stationary, as there are balancing effects of supply and demand. Many European contries are connected via cross-border transmission lines, allowing to equalize prices across interconnected countries. Additionally, neighbouring regions are expected to experience similar weather patters, and seaonal demand, leading to correlated markets. Lastly, European energy policies and regulations are often harmonzied, reducing energy structural difference between countries.
+\\
+
+\vspace{20pt}
+
+\textbf{2.1.1. Log returns}
+\\
+We take the log returns of the time series for each asset. This is done to captures any compounding differences between the assets and stabilizes large variances. Cointegration between log returns is more likely to be stationary than cointegration between raw prices.
+\\
+Specifically, the log return of asset $n$ at time $t$:
+
+\[
+R_{i,t} = \log\left( \frac{P_{i,t}}{P_{i,0}} \right)
+\]
+
+Where $P_{i,t}$ is the price of asset $i$ at time $t$ and $P_{i,0}$ is the price of asset $i$ at time $0$. The log return is a measure of the relative change in price over time.
+
+\vspace{20pt}
+
+\textbf{2.1.2. Model output: cumulative residuals}
+\\
+We calculate the residual of each asset by regressing the log returns of the asset on the log returns of the other assets:
+
+\[
+\epsilon_{n,t} = R_{n,t} - \sum_{i=1}^{N} \beta_{n,i} R_{i,t}
+\]
+
+For the purpose of this project, we cointegrate for the length of a year. A longer length of time would allow for a more comprehesive cointegration, however, it sacrifices the ability to capture short-term 
+
+An input to the deep learning model are cumulative residuals. 
+The cumulative sum mimics a \textit{price-like} behavior, which is more suitable for identifying trading signals. Raw residuals may not capture sufficient trend information, while cumulative forms highlight \textit{deviations} more clearly.
+\\
+The cumulative residuals are calculated by integrating the time series of residuals over a rolling window of $L$ days.
+
+For asset $n$, define $\epsilon^L_{n,t-1}$ as the vector of the past $L$ residuals:
+\[
+\epsilon^L_{n,t-1} = (\epsilon_{n,t-L}, \ldots, \epsilon_{n,t-1})
+\]
+
+The \textbf{cumulative residual vector} $x$ is then defined as:
+\[
+x := \mathrm{Int}(\epsilon^L_{n,t-1}) = \left( \epsilon_{n,t-L},\ \epsilon_{n,t-L} + \epsilon_{n,t-L+1},\ \ldots,\ \sum_{l=1}^{L} \epsilon_{n,t-L-1+l} \right)
+\]
+
+Where $\mathrm{Int}$ is the integration operator. The cumulative residual vector $x$ captures the cumulative effect of the residuals over the past $L$ days, providing a measure of the overall trend in the residuals.
+\\
+
+This report arbitrarily uses the cumulative residual window size of $L=30$ days. The choice of $L$ may affect the performance of the model, however, exploring different values of $L$ are out of the scope of this project.
+
+\vspace{20pt}
+
+\textbf{2.1.3. Model output: portfolio positions}
+\\
+The output for all models is a vector of $N$ values, where $N$ is the number of assets. The output is a soft normalized vector of the portfolio positions, where each value represents the weight of the corresponding asset in the portfolio. The weights are normalized such that they sum to 1, and they are constrained to be between -1 and 1. This means that the model can take long or short positions in each asset, but the total position in each asset is limited to 100\% of the portfolio value. The output takes the form of a vector $w$:
+
+\[
+w = (w_1, w_2, \ldots, w_N)
+\]
+
+
+Where $w_i$ is the weight of asset $i$ in the portfolio. The weights are normalized such that:
+
+\[
+\sum_{i=1}^{N} w_i = 1
+\]
+
+\vspace{20pt}
+
+\textbf{2.1.4. Model performance evaluation} 
+
+\textbf{Returns}
+\\
+There is a one return associated with every 30-day cumulative residual window. Each return is calculated as the matrix product of the the model outputs and the returns of the assets, one day after the end corresponding cumulative residual window. The return is calculated as:
+
+\[
+R_t = w^\top R_{t+1}
+\]
+
+Where $R_{t+1}$ is the vector of log returns for all assets at time $t+1$, and $w$ is the vector of portfolio weights at time $t$. 
+
+\vspace{20pt}
+
+\textbf{Sharpe ratio}
+\\
+The Sharpe ratio is a measure of risk-adjusted return, calculated as the ratio of the mean excess return and the standard deviation of the excess return. It is used to evaluate the performance of a trading strategy or investment portfolio. A higher Sharpe ratio indicates better risk-adjusted performance. Therefore, we use the negative of the Sharpe ratio as the loss function for our model. 
+\\
+Consider the set of returns $R = (R_1, R_2, \ldots, R_T)$, where $T$ is the number of returns. The Sharpe ratio is calculated as:
+
+\[
+\text{Sharpe ratio} = \frac{\mathbb{E}[R]}{\text{Std}[R]}
+\]
+
+Where $\mathbb{E}[R]$ is the mean of the returns, and $\text{Std}[R]$ is the standard deviation of the returns. The negative of this Sharpe ratio is then used as the loss function for the model.
+
+\vspace{20pt}
+
+\textbf{3. Data}
+\\
+The data used in this project was taken from EMBER's \textit{European Wholesale Electricity Price Data}. The that was used in this report consists of daily electricity prices for 31 European countries from 2015 to 2025. The data was downloaded in CSV format and preprocessed to remove any missing values.
+
+\vspace{20pt}
+
+\textbf{3.1. European electricity prices}
+
+
+\textbf{4. Models}
+\\
+\textbf{5. CNN+FFN}
+\\
+\textbf{6. CNN+Tranformer+FFN}
+\\
+\end{document}
