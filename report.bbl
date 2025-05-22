@@ -1,0 +1,30 @@
+\begin{thebibliography}{}
+
+\bibitem[Avellaneda and Lee, 2010]{avellaneda2010statistical}
+Avellaneda, M. and Lee, J.-H. (2010).
+\newblock Statistical arbitrage in the us equities market.
+\newblock {\em Quantitative Finance}, 10(7):761--782.
+
+\bibitem[{Ember}, 2025]{ember2025}
+{Ember} (2025).
+\newblock European wholesale electricity price data.
+\newblock
+  \url{https://ember-energy.org/data/european-wholesale-electricity-price-data/}.
+\newblock Dataset. Retrieved May 21, 2025, from Ember.
+
+\bibitem[Guijarro-Ordonez et~al., 2021]{guijarro2021deep}
+Guijarro-Ordonez, J., Pelger, M., and Zanotti, G. (2021).
+\newblock Deep learning statistical arbitrage.
+\newblock {\em arXiv preprint arXiv:2106.04028}.
+
+\bibitem[Hersbach et~al., 2025]{hersbach2025era5}
+Hersbach, H., Cobb, A., Kaandorp, M., Poli, P., Bell, B., Berrisford, P.,
+  Biavati, G., Horányi, A., Muñoz~Sabater, J., Nicolas, J., Peubey, C., Radu,
+  R., Rozum, I., Schepers, D., Simmons, A., Soci, C., Dee, D., and Thépaut,
+  J.-N. (2025).
+\newblock Era5 hourly time-series data on single levels from 1940 to present.
+\newblock Copernicus Climate Change Service (C3S) Climate Data Store (CDS).
+\newblock Dataset. Retrieved from
+  \url{https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels-timeseries}.
+
+\end{thebibliography}
