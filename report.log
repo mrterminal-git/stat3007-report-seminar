@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.5.15)  31 MAY 2025 10:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.5.15)  31 MAY 2025 16:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -866,31 +866,37 @@ LaTeX Font Info:    Font shape `T1/txr/b/n' in size <14.4> not available
 
 [5]
 
-[6
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 296--298
-
- []
-
-
+[6]
 
 [7
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 299--301
+
+LaTeX Warning: Reference `eq:residual' on page 8 undefined on input line 286.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 337--339
 
  []
 
 
 
-[8]
+[8
 
-[9
+]
+Underfull \hbox (badness 10000) in paragraph at lines 340--342
+
+ []
+
+
+
+[9]
+
+[10
 
 ]
 
-[10
+[11
 
 ] (report.bbl
 LaTeX Font Info:    Trying to load font information for T1+txtt on input line 12.
@@ -913,26 +919,30 @@ Underfull \hbox (badness 1701) in paragraph at lines 21--29
 
 )
 
-[11
+[12
 
 ] (report.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-04-14>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 24113 strings out of 469941
- 490321 string characters out of 5468946
- 881701 words of memory out of 5000000
- 50454 multiletter control sequences out of 15000+600000
- 690126 words of font info for 172 fonts, out of 8000000 for 9000
+ 24075 strings out of 469941
+ 489798 string characters out of 5468946
+ 882727 words of memory out of 5000000
+ 50425 multiletter control sequences out of 15000+600000
+ 681903 words of font info for 145 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 121i,8n,124p,788b,301s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/rtcxr.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/rtxbmi.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/rtxmi.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/rtxr.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/t1xtt.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/txex.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/txsy.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/txsyb.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on report.pdf (11 pages, 99608 bytes).
+ 121i,8n,124p,789b,301s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/rtcxr.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/rtxmi.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/rtxr.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/t1xtt.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/txex.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/txsy.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/txsyb.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/txsyc.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
+Output written on report.pdf (12 pages, 102138 bytes).
 PDF statistics:
- 97 PDF objects out of 1000 (max. 8388607)
+ 100 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

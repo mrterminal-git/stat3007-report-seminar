@@ -230,16 +230,19 @@ Where $R_{t+1}$ is the vector of log returns for all assets at time $t+1$, and $
 
 \subsubsection*{Sharpe ratio}
 
-The Sharpe ratio is a measure of risk-adjusted return, calculated as the ratio of the mean excess return and the standard deviation of the excess return. It is used to evaluate the performance of a trading strategy or investment portfolio. A higher Sharpe ratio indicates better risk-adjusted performance. Therefore, we use the negative of the Sharpe ratio as the loss function for our model. 
+The Sharpe ratio (SR) is a measure of risk-adjusted return, calculated as the ratio of the mean excess return and the standard deviation of the excess return. It is used to evaluate the performance of a trading strategy or investment portfolio. A higher Sharpe ratio indicates better risk-adjusted performance. Therefore, we use the negative of the Sharpe ratio as the loss function for our model. 
 
+\vspace{10pt}
+\noindent
 Consider the set of returns $\mathbf{r} = (r_1, r_2, \ldots, r_T)$, where $T$ is the number of returns. The Sharpe ratio is calculated as:
 
 \begin{equation}
-    \text{Sharpe ratio} = \frac{\mathbb{E}[R]}{\text{Std}[R]}    
+    \text{SR} = \frac{\mathbb{E}[\mathbf{r}]}{\text{Std}[\mathbf{r}]}    
     \label{eq:sharpe_ratio}
 \end{equation}
 
-Where $\mathbb{E}[R]$ is the mean of the returns, and $\text{Std}[R]$ is the standard deviation of the returns. The negative of this Sharpe ratio is then used as the loss function for the model.
+\noindent
+Where $\mathbb{E}[\mathbf{r}]$ is the mean of the returns, and $\text{Std}[\mathbf{r}]$ is the standard deviation of the returns. The negative of this Sharpe ratio is then used as the loss function for the model.
 
 \clearpage
 
