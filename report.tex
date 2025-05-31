@@ -89,37 +89,69 @@ The goal for this project is to develop a deep learning model that can apply Sta
 
 \section{Theory}
 
+\subsection{Long-Short Portfolio}
+A long-short portfolio is a trading strategy that involves taking long positions in undervalued assets and short positions in overvalued assets. The goal of this strategy is to profit from relative movement of an asset relative to others within the portfolio. 
+Going \textbf{long} on an asset means buying the asset with the expectation that its price will increase, allowing the trader to sell it later at a higher price. Conversely, going \textbf{short} on an asset means borrowing the asset and selling it with the expectation that its price will decrease, allowing the trader to buy it back later at a lower price and return it to the lender.
+
+\vspace{10pt}
+\noindent
+The long-short portfolio is constructed such that the total value of the long positions is equal to the total value of the short positions, allowing the trader to profit from the movements of assets relative to the other assets within the portfolio, rather than from the overall market movement.
+
 \subsection{Statistical Arbitrage: Cointegration}
 
-Cointegration is a statistical property of time series variables that indicates a long-term equilibrium relationship between them, even though the individual series may be non-stationary. In statistical arbitrage, cointegration is used to identify portfolios where a linear combination of asset prices or returns results in a stationary residual, enabling mean-reverting trading strategies. 
+Cointegration is a statistical property of a set time series variables that indicates a long-term correlation between them. The basis of cointegration is that historically correlated time series can deviate from their correlation in the short term, but will eventually revert to being correlated.
 
-Consider $N$ assets with log cumulative returns $R_{1,t}, R_{2,t}, \ldots, R_{N,t}$. These assets are said to be \textit{cointegrated} if there exists a vector $\boldsymbol{\beta} = (\beta_1, \beta_2, \ldots, \beta_N)$ such that the linear combination
-\[
-    e_t = \beta_1 R_{1,t} + \beta_2 R_{2,t} + \cdots + \beta_N R_{N,t}
-\]
-or, more compactly,
+\vspace{10pt}
+\noindent
+Consider $N$ assets with log cumulative returns $R_{1,t}, R_{2,t}, \ldots, R_{N,t}$. We can investigate wether the time series of the first asset $R_{1,t}$ is correlated with the time series of all the other assets $R_{2,t}, \ldots, R_{N,t}$ by looking at the residuals of the first asset after regressing it on the other assets.
+
 \begin{equation}
-    e_t = \boldsymbol{\beta}^\top \mathbf{R}_t
-    \label{eq:cointegration_all}
+\epsilon_{1,t} = R_{1,t} - \sum_{i=2}^{N} \beta_{1,i} R_{i,t}
+\label{eq:cointegration_single}
 \end{equation}
-where $\mathbf{R}_t = (R_{1,t}, R_{2,t}, \ldots, R_{N,t})^\top$, is a \textit{stationary process}.
 
-The stationary residual $e_t$ oscillates around a constant mean. When $e_t$ deviates significantly from the mean, traders take positions assuming it will revert.
+\noindent
+The residual $\epsilon_{1,t}$ is the difference between the log cumulative return of the first asset and a linear combination of the log cumulative returns of the other assets, at time $t$. If this residual centers around a constant mean (typically at zero), it indicates that the first asset is \textbf{cointegrated} with the other assets.
+
+\noindent
+We can extend this idea for all $N$ assets, by looking at the residuals of each asset after regressing it on all the other assets. If the residuals of all the assets center around a constant mean, it indicates that all the assets are cointegrated with each other.
+
+\begin{equation}
+\epsilon_{n,t} = R_{n,t} - \sum_{j=1, j \neq n}^{N} \beta_{n,j} R_{j,t}
+\label{eq:cointegration_all}
+\end{equation}
+
+\noindent
+Where $\epsilon_{n,t}$ is the residual of asset $n$ at time $t$, and $\beta_{n,j}$ is the coefficient of asset $j$ in the regression of asset $n$ on all the other assets. 
+
+\vspace{10pt}
+\noindent
+The signficance of cointegration is that it allows us to determine whether an asset is undervalued or overvalued relative to the other assets. If the residuals of an asset deviate significantly from zero, it indicates that the asset is either undervalued or overvalued relative to the other assets. This allows traders to take advantage of these deviations by taking long or short positions in the assets.
+
 \begin{itemize}
   \item \textbf{Long} the undervalued assets.
   \item \textbf{Short} the overvalued assets.
 \end{itemize}
 
-For example, if $e_t > \theta$, where $\theta$ is a threshold, it indicates that the portfolio is overvalued. Traders would short the portfolio, expecting the price to revert to its mean. Conversely, if $e_t < -\theta$, it indicates that the portfolio is undervalued, and traders would go long on the portfolio.
+\vspace{10pt}
+\noindent
+For example, if $e_{i,t} > 0$, it indicates that asset $i$ is overvalued. Traders would short the asset. Conversely, if $e_{i,t} < 0$, it indicates that asset $i$ is undervalued, and traders would go long on the asset.
 
-The key assumption of cointegration is that the linear combination of asset prices or returns is stationary, even if the individual series are not. This means that the spread between the assets will revert to its mean over time, allowing traders to profit from temporary deviations from this mean.
+\vspace{10pt}
+\noindent
+In Equation~\ref{eq:cointegration_all}, it is up to the user to choose the length and time period of the cointegration. For the rest of the report, we refer to a particular period of cointegration as a \textbf{cointegration window}. The length of the cointegration window is the number of days used to calculate the residuals, and the time period is the start and end date of the cointegration window.
+When picking the length of the cointegration window is a trade-off between capturing long-term trends and short-term fluctiations. A longer cointegration windows allows for a more comprehsive cointegration, however, it sacrifices the ability to capture short-term trends. A shorter cointegration window allows for a more responsive model, however, it sacrifices the ability to capture long-term trends. The choice of the length of the cointegration window is a trade-off between these two extremes - for this report, we will use a cointegration window of 365 days. However, this choice is largely arbitrary, and the performance of the model may vary depending on the length of the cointegration window.  
 
-In the context of European electricity prices, we expect the prices in Europe to be stationary, as there are balancing effects of supply and demand. Many European countries are connected via cross-border transmission lines, allowing to equalize prices across interconnected countries. Additionally, neighbouring regions are expected to experience similar weather patterns, and seasonal demand, leading to correlated markets. Lastly, European energy policies and regulations are often harmonzied, reducing energy structural difference between countries.
+\vspace{10pt}
+\noindent
+In the context of European electricity prices, we expect the prices in Europe to be highly correlated, as there are balancing effects of supply and demand. Many European countries are connected via cross-border transmission lines, allowing to equalize prices across interconnected countries. Additionally, neighbouring regions are expected to experience similar weather patterns, and seasonal demand, leading to correlated markets. Lastly, European energy policies and regulations are often harmonzied, reducing energy structural difference between countries.
 
 \subsubsection{Log returns}
 
 We take the log of the cumulative returns of the time series for each asset. This is done to capture any compounding differences between the assets and stabilizes large variances. Additionally, taking the cumulative returns instead of the raw prices allows us to capture the relative change in price over time, normalizing the data and making it easier to compare across different assets. Cointegration between log returns is more likely to be stationary than cointegration between raw prices.
 
+\vspace{10pt}
+\noindent
 Specifically, the log return of asset $n$ at time $t$:
 
 \begin{equation}
@@ -127,50 +159,55 @@ Specifically, the log return of asset $n$ at time $t$:
     \label{eq:log_cumulative_return}
 \end{equation}
 
+\noindent
 Where $P_{i,t}$ is the price of asset $i$ at time $t$ and $P_{i,0}$ is the price of asset $i$ at time $0$. The log return is a measure of the relative change in price over time.
 
-\subsubsection{Cumulative residuals}
-We calculate the residual of each asset by regressing the log returns of the asset on the log returns of the other assets:
+\noindent
+We can simply this by defining the vector $\mathbf{R}_t$ as the vector of log cumulative returns for all assets at time $t$, and the vector $\mathbf{P}_t$ as the vector of prices for all assets at time $t$. The log cumulative return vector is then defined as:
 
 \begin{equation}
-    \epsilon_{n,t} = R_{n,t} - \sum_{i=1}^{N} \beta_{n,i} R_{i,t}
-    \label{eq:residual}
+    \mathbf{R}_t = \log\left( \frac{\mathbf{P}_t}{\mathbf{P}_0} \right)
+    \label{eq:log_cumulative_return_vector}
 \end{equation}
 
-An input to the deep learning model are cumulative residuals. 
+\subsubsection{Cumulative residuals}
+
 The cumulative sum mimics a \textit{price-like} behavior, which is more suitable for identifying trading signals. (\textcolor{red}{Needs citation here}) Raw residuals may not capture sufficient trend information, while cumulative forms highlight \textit{deviations} more clearly.
 
-The cumulative residuals are calculated by integrating the time series of residuals over a rolling window of $L$ days.
-
-For asset $n$, define $\epsilon^L_{n,t-1}$ as the vector of the past $L$ residuals:
+\vspace{10pt}
+\noindent
+The cumulative residuals are calculated by integrating the time series of residuals over a window from day $t_{i}$ to $t_{f}$. For asset $n$, define $\epsilon^{t_i,t_f}_{n,t}$ as the vector of the past residuals from day $t_{i}$ to day $t_{f}$:
 \begin{equation}
-    \epsilon^L_{n,t-1} = (\epsilon_{n,t-L}, \ldots, \epsilon_{n,t-1})
+    \mathbf{\epsilon}^{t_i,t_f}_{n,t} = \left( \epsilon_{n,t_i},\ \epsilon_{n,t_i+1},\ \ldots,\ \epsilon_{n,t_f} \right)
     \label{eq:residual_vector}
 \end{equation}
 
-The \textbf{cumulative residual vector} $x$ is then defined as:
+\noindent
+The \textbf{cumulative residual vector} $\mathbf{x}_n^{t_i, t_f}$ is then defined as:
 \begin{equation}
-    x := \mathrm{Int}(\epsilon^L_{n,t-1}) 
-      = \left( \epsilon_{n,t-L},\ \epsilon_{n,t-L} + \epsilon_{n,t-L+1},\ \ldots,\ \sum_{l=1}^{L} \epsilon_{n,t-L-1+l} \right)
+    \mathbf{x}_n^{t_i, t_f} := \mathrm{Int}(\epsilon^{t_i, t_f}_{n,t}) 
+      = \left( \mathbf{\epsilon}_{n,t_i},\ \mathbf{\epsilon}_{n,t_i} + \mathbf{\epsilon}_{n,t_i+1},\ \mathbf{\epsilon}_{n,t_i} + \mathbf{\epsilon}_{n,t_i+1} + \mathbf{\epsilon}_{n,t_i+2},\ \ldots,\ \sum_{t=t_i}^{t_f} \mathbf{\epsilon}_{n,t} \right)
     \label{eq:cumulative_residual}
 \end{equation}
 
-Where $\mathrm{Int}$ is the integration operator. The cumulative residual vector $x$ captures the cumulative effect of the residuals over the past $L$ days, providing a measure of the overall trend in the residuals.
+\noindent
+Where $\mathrm{Int}$ is the integration operator, and $\mathbf{\epsilon}_{n,t}$ is the residual of asset $n$ at time $t$. For the rest of the report, we will refer to the period from $t_i$ to $t_f$ as the \textbf{cumulative residual window}.
 
-For the purpose of this project, we cointegrate for the length of a year. A longer length of time would allow for a more comprehesive cointegration, however, it sacrifices the ability to capture short-term trends. A shorter length of time would allow for a more responsive model, however, it sacrifices the ability to capture long-term trends. The choice of the length of the cointegration period is a trade-off between these two extremes.
-
-Additionally, this report arbitrarily uses the cumulative residual window size of $L=30$ days. The choice of $L$ may affect the performance of the model, however, exploring different values of $L$ is out of the scope of this project.
+\vspace{10pt}
+\noindent
+This report arbitrarily uses the cumulative residual window size of $L=t_f-t_i=30$ days. We expect that the choice of $L$ would affect the performance of the model, however, exploring different values of $L$ is out of the scope of this project.
 
 \subsubsection{Portfolio positions}
 
-The output for all models is a vector of $N$ values, where $N$ is the number of assets. The output is a soft normalized vector of the portfolio positions, where each value represents the weight of the corresponding asset in the portfolio. The weights are normalized such that they sum to 1, and they are constrained to be between -1 and 1. This means that the model can take long or short positions in each asset, but the total position in each asset is limited to 100\% of the portfolio value. The output takes the form of a vector $w$:
+For this report, we define a portfolio position as a vector $w$ of weights for each asset in the portfolio. The weights represent the long or short position of each asset in the portfolio, and are soft normalized such that they sum to 1. The portfolio position is defined as:
 
 \begin{equation}
-    w = (w_1, w_2, \ldots, w_N)
+    \mathbf{w} = (w_1, w_2, \ldots, w_N)
     \label{eq:portfolio_weights}
 \end{equation}
 
-Where $w_i$ is the weight of asset $i$ in the portfolio. The weights are normalized such that:
+\noindent
+Where $w_i$ is the weight of asset $i$ in the portfolio. The weights are soft normalized such that:
 
 \begin{equation}
     \sum_{i=1}^{N} w_i = 1
@@ -181,20 +218,21 @@ Where $w_i$ is the weight of asset $i$ in the portfolio. The weights are normali
 
 \subsubsection*{Returns}
 
-There is a one return associated with every 30-day cumulative residual window. Each return is calculated as the matrix product of the the model outputs and the returns of the assets, one day after the end corresponding cumulative residual window. The return is calculated as:
+Given the portfolio position $\mathbf{w}_t$ at time $t$, the return of the portfolio at time $t$ is defined as the matrix product of the portfolio weights and the vector of log returns of all assets at time $t+1$. The return is defined as:
 
 \begin{equation}
-    R_t = w^\top R_{t+1} - \sum_{i=1}^{N} w_i
+    \mathbf{r}_t = \mathbf{w}_t^\top \mathbf{R}_{t+1}
     \label{eq:returns}
 \end{equation}
 
+\noindent
 Where $R_{t+1}$ is the vector of log returns for all assets at time $t+1$, and $w$ is the vector of portfolio weights at time $t$. 
 
 \subsubsection*{Sharpe ratio}
 
 The Sharpe ratio is a measure of risk-adjusted return, calculated as the ratio of the mean excess return and the standard deviation of the excess return. It is used to evaluate the performance of a trading strategy or investment portfolio. A higher Sharpe ratio indicates better risk-adjusted performance. Therefore, we use the negative of the Sharpe ratio as the loss function for our model. 
 
-Consider the set of returns $R = (R_1, R_2, \ldots, R_T)$, where $T$ is the number of returns. The Sharpe ratio is calculated as:
+Consider the set of returns $\mathbf{r} = (r_1, r_2, \ldots, r_T)$, where $T$ is the number of returns. The Sharpe ratio is calculated as:
 
 \begin{equation}
     \text{Sharpe ratio} = \frac{\mathbb{E}[R]}{\text{Std}[R]}    
@@ -250,7 +288,7 @@ We gather the log of the cumulative returns of the entire set of assets, using E
     \label{eq:input_single_asset}
 \end{equation}
 
-where $x_i$ is the input for asset $i$, $\epsilon_{i,t-L}$ is the residual of asset $i$ at time $t-L$, $t$ is the current time within the cointegration period, and $L$ is the length of the rolling window. 
+where $x_i$ is the input for asset $n$, $\epsilon_{n,t-L}$ is the residual of asset $n$ at time $t-L$, $t$ is the current time within the cointegration period, and $L$ is the length of the rolling window. 
 \\
 The input is a concatenation of the cumulative residuals for all assets, and takes the form of a matrix $x$ of size $N \times L$, where $N$ is the number of assets and $L$ is the length of the rolling window. The input is a matrix of size $N \times L$, and takes the form:
 
