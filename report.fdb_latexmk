@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex report"] 1748692033.4081 "report.aux" "report.bbl" "report" 1748692131.02592 0
+["bibtex report"] 1748699253.91699 "report.aux" "report.bbl" "report" 1748699255.78585 0
   "./references.bib" 1747873980 1643 7e58bd360752d4a1c2cd7f550633dd2a ""
   "C:/Users/Volter/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/apalike.bst" 1291972791 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "report.aux" 1748692130 2927 e3fc97690843f5bcd4606f296678e610 "pdflatex"
+  "report.aux" 1748699255 3128 9b15029e156906a97331de3016865bad "pdflatex"
   (generated)
   "report.bbl"
   "report.blg"
   (rewritten before read)
-["pdflatex"] 1748692129.60223 "c:/Users/Volter/Documents/GITHUB REPOSITORIES/stat3007-report-seminar/report.tex" "report.pdf" "report" 1748692131.02635 0
+["pdflatex"] 1748699254.14661 "c:/Users/Volter/Documents/GITHUB REPOSITORIES/stat3007-report-seminar/report.tex" "report.pdf" "report" 1748699255.78628 0
   "C:/Users/Volter/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1747873953 82560 ef239c2cb0a12117bb5525d1036b4375 ""
   "C:/Users/Volter/AppData/Local/MiKTeX/fonts/tfm/public/rsfs/rsfs10.tfm" 1743742663 688 37338d6ab346c2f1466b29e195316aa4 ""
   "C:/Users/Volter/AppData/Local/MiKTeX/fonts/tfm/public/rsfs/rsfs5.tfm" 1743742663 684 3a51bd4fd9600428d5264cf25f04bb9a ""
@@ -82,9 +82,15 @@
   "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex" 1673775190 35249 abd4adf948f960299a4b3d27c5dddf46 ""
   "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclayer/pgfcoretransformations.code.tex" 1673775190 22012 81b34a0aa8fa1a6158cc6220b00e4f10 ""
   "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclayer/pgfcoretransparency.code.tex" 1673775190 8893 e851de2175338fdf7c17f3e091d94618 ""
+  "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarybackgrounds.code.tex" 1673775190 4572 4a19637ef65ce88ad2f2d5064b69541d ""
+  "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryfit.code.tex" 1673775190 3626 2d87dc681257fa32d07a8b3934b10f88 ""
+  "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypositioning.code.tex" 1673775190 3937 3f208572dd82c71103831da976d74f1a ""
+  "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.geometric.code.tex" 1673775190 339 be0fe46d92a80e3385dd6a83511a46f2 ""
   "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex" 1673775190 11518 738408f795261b70ce8dd47459171309 ""
   "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex" 1673775190 186782 af500404a9edec4d362912fe762ded92 ""
+  "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex" 1673775190 58801 1e750fb0692eb99aaac45698bbec96b1 ""
   "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex" 1673775190 32995 ac577023e12c0e4bd8aa420b2e852d1a ""
+  "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/generic/pgf/libraries/shapes/pgflibraryshapes.geometric.code.tex" 1673775190 161011 76ab54df0aa1a9d3b27a94864771d38d ""
   "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgfint.code.tex" 1673775190 3063 8c415c68a0f3394e45cfeca0b65f6ee6 ""
   "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgfmath.code.tex" 1673775190 949 cea70942e7b7eddabfb3186befada2e6 ""
   "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgfmathcalc.code.tex" 1673775190 13270 2e54f2ce7622437bf37e013d399743e3 ""
@@ -207,11 +213,12 @@
   "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/latex/upquote/upquote.sty" 1335534756 1088 517e01cde97c1c0baf72e69d43aa5a2e ""
   "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/Volter/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
-  "c:/Users/Volter/Documents/GITHUB REPOSITORIES/stat3007-report-seminar/report.tex" 1748692128 24300 5aedea5e88d500ca5119a9e436b5f00c ""
+  "c:/Users/Volter/Documents/GITHUB REPOSITORIES/stat3007-report-seminar/report.tex" 1748699253 20801 86dc0376aae062acf1a419358de33d8e ""
+  "figures/input_preparation_pipeline.drawio.png" 1748698632 107090 ec6ba3427a5a3f169c7268bae397ec18 ""
   "preamble.tex" 1747709231 6046 21ea3506a74ed51c196996e1713e79ea ""
-  "report.aux" 1748692130 2927 e3fc97690843f5bcd4606f296678e610 "pdflatex"
-  "report.bbl" 1748692033 1337 6a3e9a4959e6bd1e5e05ba0c19de0283 "bibtex report"
-  "report.tex" 1748692128 24300 5aedea5e88d500ca5119a9e436b5f00c ""
+  "report.aux" 1748699255 3128 9b15029e156906a97331de3016865bad "pdflatex"
+  "report.bbl" 1748699254 1337 6a3e9a4959e6bd1e5e05ba0c19de0283 "bibtex report"
+  "report.tex" 1748699253 20801 86dc0376aae062acf1a419358de33d8e ""
   (generated)
   "report.aux"
   "report.log"

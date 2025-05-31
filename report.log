@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.3.14)  31 MAY 2025 21:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.3.14)  31 MAY 2025 23:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -717,47 +717,65 @@ LaTeX Info: Redefining \\ on input line 3187.
 \FV@LineIndentBox=\box135
 \c@FV@BreakBufferDepth=\count360
 \FV@LineWidth=\dimen298
+) (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.geometric.code.tex
+File: tikzlibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
+ (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.geometric.code.tex
+File: pgflibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)) (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibraryarrows.meta.code.tex
+File: pgflibraryarrows.meta.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfarrowinset=\dimen299
+\pgfarrowlength=\dimen300
+\pgfarrowwidth=\dimen301
+\pgfarrowlinewidth=\dimen302
+) (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarypositioning.code.tex
+File: tikzlibrarypositioning.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryfit.code.tex
+File: tikzlibraryfit.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarybackgrounds.code.tex
+File: tikzlibrarybackgrounds.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@layerbox@background=\box136
+\pgf@layerboxsaved@background=\box137
 )
-LaTeX Font Info:    Trying to load font information for T1+txr on input line 34.
+LaTeX Font Info:    Trying to load font information for T1+txr on input line 36.
  (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\t1txr.fd
 File: t1txr.fd 2000/12/15 v3.1
 ) (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count361
-\l__pdf_internal_box=\box136
+\l__pdf_internal_box=\box138
 ) (report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 34.
-LaTeX Font Info:    Trying to load font information for OML+txmi on input line 34.
+LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 36.
+LaTeX Font Info:    Trying to load font information for OML+txmi on input line 36.
  (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\omltxmi.fd
 File: omltxmi.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for OMS/txsy/m/n on input line 34.
-LaTeX Font Info:    Trying to load font information for OMS+txsy on input line 34.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMS/txsy/m/n on input line 36.
+LaTeX Font Info:    Trying to load font information for OMS+txsy on input line 36.
  (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\omstxsy.fd
 File: omstxsy.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for OMX/txex/m/n on input line 34.
-LaTeX Font Info:    Trying to load font information for OMX+txex on input line 34.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMX/txex/m/n on input line 36.
+LaTeX Font Info:    Trying to load font information for OMX+txex on input line 36.
  (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\omxtxex.fd
 File: omxtxex.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for U/txexa/m/n on input line 34.
-LaTeX Font Info:    Trying to load font information for U+txexa on input line 34.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for U/txexa/m/n on input line 36.
+LaTeX Font Info:    Trying to load font information for U+txexa on input line 36.
  (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\utxexa.fd
 File: utxexa.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    ... okay on input line 36.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -796,13 +814,13 @@ LaTeX Font Info:    ... okay on input line 34.
 (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count362
-\scratchdimen=\dimen299
-\scratchbox=\box137
+\scratchdimen=\dimen303
+\scratchbox=\box139
 \nofMPsegments=\count363
 \nofMParguments=\count364
 \everyMPshowfont=\toks46
 \MPscratchCnt=\count365
-\MPscratchDim=\dimen300
+\MPscratchDim=\dimen304
 \MPnumerator=\count366
 \makeMPintoPDFobject=\count367
 \everyMPtoPDFconversion=\toks47
@@ -813,50 +831,50 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 \c@lstlisting=\count368
-LaTeX Font Info:    Trying to load font information for OT1+txr on input line 36.
+LaTeX Font Info:    Trying to load font information for OT1+txr on input line 38.
  (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\ot1txr.fd
 File: ot1txr.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Trying to load font information for U+txsya on input line 36.
+LaTeX Font Info:    Trying to load font information for U+txsya on input line 38.
  (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\utxsya.fd
 File: utxsya.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Trying to load font information for U+txsyb on input line 36.
+LaTeX Font Info:    Trying to load font information for U+txsyb on input line 38.
  (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\utxsyb.fd
 File: utxsyb.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Trying to load font information for U+rsfs on input line 36.
+LaTeX Font Info:    Trying to load font information for U+rsfs on input line 38.
  (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/latex/jknappen\ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-LaTeX Font Info:    Trying to load font information for U+txmia on input line 36.
+LaTeX Font Info:    Trying to load font information for U+txmia on input line 38.
  (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\utxmia.fd
 File: utxmia.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Trying to load font information for U+txsyc on input line 36.
+LaTeX Font Info:    Trying to load font information for U+txsyc on input line 38.
  (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\utxsyc.fd
 File: utxsyc.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `T1/txr/b/n' in size <17.28> not available
-(Font)              Font shape `T1/txr/bx/n' tried instead on input line 44.
+(Font)              Font shape `T1/txr/bx/n' tried instead on input line 46.
 
 
 [1
 
 {C:/Users/Volter/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}]
-LaTeX Font Info:    Trying to load font information for TS1+txr on input line 68.
+LaTeX Font Info:    Trying to load font information for TS1+txr on input line 70.
  (C:\Users\Volter\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\ts1txr.fd
 File: ts1txr.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `T1/txr/b/n' in size <12> not available
-(Font)              Font shape `T1/txr/bx/n' tried instead on input line 70.
+(Font)              Font shape `T1/txr/bx/n' tried instead on input line 72.
 
 
 [2
 
 ]
 LaTeX Font Info:    Font shape `T1/txr/b/n' in size <14.4> not available
-(Font)              Font shape `T1/txr/bx/n' tried instead on input line 92.
+(Font)              Font shape `T1/txr/bx/n' tried instead on input line 94.
 
 
 [3
@@ -876,36 +894,24 @@ LaTeX Font Info:    Font shape `T1/txr/b/n' in size <14.4> not available
 [8
 
 ]
+Underfull \hbox (badness 10000) in paragraph at lines 367--369
 
-LaTeX Warning: Reference `eq:cumres' on page 9 undefined on input line 335.
-
-
-LaTeX Warning: Reference `eq:logreturn' on page 9 undefined on input line 356.
+ []
 
 
-LaTeX Warning: Reference `eq:residual' on page 9 undefined on input line 363.
+Underfull \hbox (badness 10000) in paragraph at lines 370--372
+
+ []
 
 
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 414--416
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 417--419
-
- []
-
-
-
-[10]
-
-[11
+[10
 
 ]
 
-[12
+[11
 
 ] (report.bbl
 LaTeX Font Info:    Trying to load font information for T1+txtt on input line 12.
@@ -928,30 +934,41 @@ Underfull \hbox (badness 1701) in paragraph at lines 21--29
 
 )
 
+[12
+
+]
+<figures/input_preparation_pipeline.drawio.png, id=53, 860.21375pt x 1356.06625pt>
+File: figures/input_preparation_pipeline.drawio.png Graphic file (type png)
+<use figures/input_preparation_pipeline.drawio.png>
+Package pdftex.def Info: figures/input_preparation_pipeline.drawio.png  used on input line 414.
+(pdftex.def)             Requested size: 400.38872pt x 631.18504pt.
+
+
 [13
 
-] (report.aux)
+]
+Overfull \vbox (16.0778pt too high) has occurred while \output is active []
+
+
+
+[14 <./figures/input_preparation_pipeline.drawio.png>] (report.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
  ) 
 Here is how much of TeX's memory you used:
- 24107 strings out of 473523
- 490629 string characters out of 5714146
- 892542 words of memory out of 5000000
- 46876 multiletter control sequences out of 15000+600000
+ 25075 strings out of 473523
+ 516599 string characters out of 5714146
+ 926772 words of memory out of 5000000
+ 47824 multiletter control sequences out of 15000+600000
  617977 words of font info for 153 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 121i,8n,124p,789b,421s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 121i,8n,124p,789b,358s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/rtcxr.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/rtxmi.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/rtxr.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/t1xtt.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/txex.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/txsy.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/txsyb.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/public/txfonts/txsyc.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Volter/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on report.pdf (13 pages, 106819 bytes).
+Output written on report.pdf (14 pages, 140847 bytes).
 PDF statistics:
- 104 PDF objects out of 1000 (max. 8388607)
+ 110 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 18 words of extra memory for PDF output out of 10000 (max. 10000000)
 

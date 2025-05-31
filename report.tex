@@ -4,6 +4,8 @@
 \usepackage{fancyhdr}
 \usepackage{natbib}
 \usepackage{fvextra}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds}
 \DefineVerbatimEnvironment{Code}{Verbatim}{
     fontsize=\footnotesize, % Adjust font size
     breaklines=true,        % Enable line wrapping
@@ -282,39 +284,19 @@ Now Filip will talk about the model and training workflow
 \section{Models}
 \subsection*{Input Preperation}
 
+We prepare the input data for the model using the following steps:
 
-\begin{itemize}
-    \item Cointegration window of 365 days
-    \item We create a set of cointegration windows, starting from the 2015-01-01 of the dataset, and rolling 182 days at a time (i.e. 6 months) until the end of the dataset at 2024-12-31.
-    \item Inside each cointegration window, we apply the following steps to create entire set of inputs for the model:
-    \begin{itemize}
-        \item We calculate the log cumulative returns of all the assets, using Equation~\ref{eq:log_cumulative_return}.
-        \item We apply cointegration to the log returns of the assets, to obtain the time-series residuals for each asset, using Equation~\ref{eq:cointegration_all}.
-        \item We create a set of cumalative residual windows of 30 days starting from the first day of the cointegration period, and rolling one day at a time, until the end of the cointegration period. This gives us a set of cumulative residuals for each asset, using Equation~\ref{eq:cumulative_residual}.
-        \item For each cumuatlive residual window, we find the next day return for each asset, using Equation~\ref{eq:log_cumulative_return}, where $P_{i,0}$ is the price of asset $i$ at the start of the cointegration period, and $P_{i,t+1}$ is the price of asset $i$ one day after the end of the cumulative residual window. 
-        \item For each cumulative residual window, we also gather the weather data for the same period, and concatenate it with the cumualative residuals to create a input for the model.
-    \end{itemize}
-    \item The output of the model is a vector of portfolio weights for each asset, which is soft normalized to sum to 1.
-    \item We multiply the portfolio weights by the returns of the assets one day after the end of the cumulative residual window, to get the next day return for that input.
-    \item We get a set of next returns, the size of which is determined by the batch size during training.
-    \item We calculate the Sharpe ratio of the set of next day returns, and use the negative of the Sharpe ratio as the loss function.
-\end{itemize}
-
-\section*{Input Preparation Pipeline}
-
-To train the deep learning model for statistical arbitrage, we follow these steps:
-
-\subsection*{Cointegration Windowing}
+\subsubsection*{Create cointegration windows:}
 \begin{itemize}
     \item The full historical dataset (2015–2024) is segmented into \textbf{cointegration windows} of 365 days, rolling forward every 182 days.
 \end{itemize}
 
-\subsection*{Within each cointegration window:}
+\subsubsection*{Within each cointegration window:}
 
 \begin{enumerate}
     \item \textbf{Log Cumulative Returns}:
     \begin{itemize}
-        \item For each asset $i$, calculate the log cumulative returns as defined in Equation~\eqref{eq:log_cumulative_return}.
+        \item For each asset $n$, calculate the log cumulative returns as defined in Equation~\eqref{eq:log_cumulative_return}.
         \item Shapes:
         \begin{itemize}
             \item Input price matrix: $P \in \mathbb{R}^{N \times T}$
@@ -332,9 +314,9 @@ To train the deep learning model for statistical arbitrage, we follow these step
     \begin{itemize}
         \item Within each cointegration window, we slide a fixed-length window of 30 days across time \textbf{one day at a time} to construct the model input.
         
-        \item For each starting index $t_i$, we compute a sequence of cumulative sums over the next 30 days, as defined in Equation~\eqref{eq:cumres}:
+        \item For each starting index $t_i$, we compute a sequence of cumulative sums over the next 30 days, as defined in Equation~\eqref{eq:cumulative_residual}:
 
-                \item Input to the model:
+                \item One input to the model:
         \[
         \mathbf{x} \in \mathbb{R}^{N \times L}
         \quad \text{(cumulative residuals across $N$ assets and $L = 30$ days)}
@@ -353,38 +335,9 @@ To train the deep learning model for statistical arbitrage, we follow these step
         \[
         \mathbf{y}_t = \mathbf{R}_{t+1} \in \mathbb{R}^N
         \]
-        where $\mathbf{R}_{t+1}$ is defined by Equation~\eqref{eq:logreturn}.
+        where $\mathbf{R}_{t+1}$ is defined by Equation~\eqref{eq:log_cumulative_return_vector}.
     \end{itemize}
 \end{enumerate}
-
-
-\subsection*{Model Inputs}
-
-We gather the log of the cumulative returns of the entire set of assets, using Equation~\ref{eq:log_cumulative_return}. We then apply cointegration for an entire year (365 days) to the log returns of the assets, to obtain the time-series residuals for each asset for the entire year, using Equation~\ref{eq:residual}. We then take the residuals of the last 30 days, starting from the first day of the cointegration period, and take cumulative sum of the residuals over a rolling window of 30 days, using Equation~\ref{eq:cumulative_residual}. This gives us a time-series of cumulative residuals for each asset, which we use as the input to the model. The input takes the form:
-\begin{equation}
-    x_i = \begin{pmatrix}
-        \epsilon_{i,t-L} & \epsilon_{i,t-L-1} & \ldots & \epsilon_{i,t}
-    \end{pmatrix}
-    \label{eq:input_single_asset}
-\end{equation}
-
-where $x_i$ is the input for asset $n$, $\epsilon_{n,t-L}$ is the residual of asset $n$ at time $t-L$, $t$ is the current time within the cointegration period, and $L$ is the length of the rolling window. 
-\\
-The input is a concatenation of the cumulative residuals for all assets, and takes the form of a matrix $x$ of size $N \times L$, where $N$ is the number of assets and $L$ is the length of the rolling window. The input is a matrix of size $N \times L$, and takes the form:
-
-\begin{equation}
-    x = \begin{pmatrix}
-        x_1 & x_2 & \ldots & x_N \\
-    \end{pmatrix}
-    \label{eq:input_matrix}
-\end{equation}
-
-The 30-day cumulative residuals is as a rolling window, sliding one day at a time across the the cointegration period. Therefore, the total number of inputs (data-points) for a single cointegration period is $T - L$, where $T$ is the total number of days in the cointegration period.
-
-% \vspace{20pt}
-
-
-
 
 \subsection*{Architecture:}
 \begin{itemize}
@@ -421,17 +374,17 @@ The set of inputs creates a set of next-day returns, which are then used to calc
 
 % \subsection{CNN+Tranformer+FFN}
 
- \clearpage
+\clearpage
 
- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Results
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \section{Results}
+\section{Results}
 
- \clearpage
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -440,17 +393,29 @@ The set of inputs creates a set of next-day returns, which are then used to calc
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
- \section{Discussion}
-
+\section{Discussion}
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % References
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\clearpage
+
 
 \bibliographystyle{apalike}
 \bibliography{references.bib}
 
+\clearpage
+
+\section{Appendix}
+% Input figure of input preparation pipeline
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/input_preparation_pipeline.drawio.png}
+    \caption{Input Preparation Pipeline for Deep Learning Model}
+    \label{fig:input_preparation_pipeline}
+\end{figure}
+
+\clearpage
 
 \end{document}
