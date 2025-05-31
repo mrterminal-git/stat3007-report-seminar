@@ -10,7 +10,9 @@
     breakanywhere=true      % Allow breaking anywhere
 }
 
-\title{Statistical Arbitrage and Deep Learning in the European Electricity Market \\ Deep Learning (STAT3007/7007) \\ Report - Semester 1, 2025.}
+% \title{Statistical Arbitrage and Deep Learning in the European Electricity Market \\ Deep Learning (STAT3007/7007) \\ Report - Semester 1, 2025.}
+
+\title{Integrating Weather Data into Deep Learning-Based Statistical Arbitrage \\ Deep Learning (STAT3007/7007) \\ Report - Semester 1, 2025.}
 
 \author{\normalsize
     Filip Orestav\\ \normalsize
@@ -29,7 +31,6 @@
     46375489
 }
 
-
 \begin{document}
 
 \maketitle
@@ -42,7 +43,9 @@
 
 \section{Introduction}
 
-Satistical Arbitrage is a trading strategy that aims to profit from the relative price movements of two or more assets. \citep{avellaneda2010statistical} It involves identifying mispricings in the market and taking advantage of them by simultaneously buying and selling the assets. Statistical arbitrage is based on the idea that pairs or groups of historically similar stocks are expected to maintain their statistical relationship in the future, allowing traders to exploit temporary deviations from this relationship. The goal for this project is to develop a deep learning model that can apply Statistical Arbitrage to identify unfairly priced electricity prices in the European market, and to create a trading strategy to create a profitable trading strategy.
+Statistical Arbitrage is a trading strategy that aims to profit from the relative price movements of two or more assets.  It involves identifying mispricings in the market and taking advantage of them by simultaneously buying and selling the assets. Statistical arbitrage is based on the idea that pairs or groups of historically similar stocks are expected to maintain their statistical relationship in the future, allowing traders to exploit temporary deviations from this relationship. \citep{avellaneda2010statistical}
+
+The goal for this project is to develop a deep learning model that can apply Statistical Arbitrage to identify unfairly priced electricity prices in the European market, and to create a profitable trading strategy.
 
 \clearpage
 
@@ -56,10 +59,22 @@ Satistical Arbitrage is a trading strategy that aims to profit from the relative
 
 \citep{guijarro2021deep}
 
+
+
+
+
+
 \begin{itemize}
-    \item Architecture design
-    \item Main findings 
-    \item (Insert a a figure of their architecture)
+    \item There model we use in this report
+        \begin{itemize}
+            \item Architecture design: what are the components, the purpose of their components 
+            \item Main findings of the paper and how that's relevant to our current study 
+            \item Insert a figure of their architecture
+            \item Discuss which part of their model and we're going to use and why
+        \end{itemize}
+    \item https://ieeexplore.ieee.org/abstract/document/9383387
+"Electricity price forecast based on weekly weather forecast and its application to arbitrage in the forward market" (This paper should have something about how weather affects the supply and demand of electricity and hence the prices)
+    \item success stories of incorporating different data source into statistical arbitrage and get good results 
 \end{itemize}
 
 
@@ -99,7 +114,7 @@ For example, if $e_t > \theta$, where $\theta$ is a threshold, it indicates that
 
 The key assumption of cointegration is that the linear combination of asset prices or returns is stationary, even if the individual series are not. This means that the spread between the assets will revert to its mean over time, allowing traders to profit from temporary deviations from this mean.
 
-In the context of Eurpoean electricity prices, we expect the prices in Europe to be stationary, as there are balancing effects of supply and demand. Many European countries are connected via cross-border transmission lines, allowing to equalize prices across interconnected countries. Additionally, neighbouring regions are expected to experience similar weather patterns, and seaonal demand, leading to correlated markets. Lastly, European energy policies and regulations are often harmonzied, reducing energy structural difference between countries.
+In the context of European electricity prices, we expect the prices in Europe to be stationary, as there are balancing effects of supply and demand. Many European countries are connected via cross-border transmission lines, allowing to equalize prices across interconnected countries. Additionally, neighbouring regions are expected to experience similar weather patterns, and seasonal demand, leading to correlated markets. Lastly, European energy policies and regulations are often harmonzied, reducing energy structural difference between countries.
 
 \subsubsection{Log returns}
 
@@ -123,7 +138,7 @@ We calculate the residual of each asset by regressing the log returns of the ass
 \end{equation}
 
 An input to the deep learning model are cumulative residuals. 
-The cumulative sum mimics a \textit{price-like} behavior, which is more suitable for identifying trading signals. Raw residuals may not capture sufficient trend information, while cumulative forms highlight \textit{deviations} more clearly.
+The cumulative sum mimics a \textit{price-like} behavior, which is more suitable for identifying trading signals. (\textcolor{red}{Needs citation here}) Raw residuals may not capture sufficient trend information, while cumulative forms highlight \textit{deviations} more clearly.
 
 The cumulative residuals are calculated by integrating the time series of residuals over a rolling window of $L$ days.
 
@@ -200,18 +215,20 @@ Where $\mathbb{E}[R]$ is the mean of the returns, and $\text{Std}[R]$ is the sta
 
 \section{Data}
 
-Our dataset consists of electricity data and weather data.
+We have two different datasets. One containing the electricity prices for 31 different countries in Europe, and a second dataset containing weather data for these countries, in the same period. 
 
 \subsection{European electricity prices}
 
-The electricity price data used in this project was taken from EMBER's \textit{European Wholesale Electricity Price Data} \citep{ember2025}.  The that was used in this report consists of daily electricity prices for 31 European countries from 2015 to 2025. The data was downloaded in CSV format and preprocessed to remove any missing values.
+The electricity price data used in this project was taken from EMBER's \textit{European Wholesale Electricity Price Data} \citep{ember2025}.  The data used in this report consists of daily electricity prices for 31 European countries from 2015 to 2025. The data was downloaded in CSV format and preprocessed to remove any missing values. The information contained in the dataset is the country, data, and price given in EUR per MWh. 
 
 \subsection{European weather data}
-We used the dataset \textit{ERA5 hourly time-series data on single levels from 1940 to present}. \citep{hersbach2025era5}. 
+We used the dataset \textit{ERA5 hourly time-series data on single levels from 1940 to present}. \citep{hersbach2025era5}. This data originally contained hourly weather data, such as wind speed, precipitation and temperature above 2m above sea level. For us to use this dataset, we have aggregated the data to daily instead of hourly. For each of the data columns, we have taken the average during the day, aswell as the maximum and minimum values. 
 
-\begin{itemize}
-    \item What is a available in the dataset? What and how did we extract the information we need? How did we preprocess the data?
-\end{itemize}
+Now Filip will talk about the model and training workflow
+
+% \begin{itemize}
+%     \item What is a available in the dataset? What and how did we extract the information we need? How did we preprocess the data?
+% \end{itemize}
 
  \clearpage
 
@@ -225,7 +242,7 @@ We used the dataset \textit{ERA5 hourly time-series data on single levels from 1
 
 \subsection*{Model Inputs}
 
-We gather the log of the cumulative returns of the entire set of assets, using Equation~\ref{eq:log_cumulative_return}. We than apply cointegration for an entire year (365 days) to the log returns of the assets, to obtain the time-series residuals for each asset for the entire year, using Equation~\ref{eq:residual}. We than take the residuals of the last 30 days, starting from the first day of the cointegration period, and take cumulative sum of the residuals over a rolling window of 30 days, using Equation~\ref{eq:cumulative_residual}. This gives us a time-series of cumulative residuals for each asset, which we use as the input to the model. The input takes the form:
+We gather the log of the cumulative returns of the entire set of assets, using Equation~\ref{eq:log_cumulative_return}. We then apply cointegration for an entire year (365 days) to the log returns of the assets, to obtain the time-series residuals for each asset for the entire year, using Equation~\ref{eq:residual}. We then take the residuals of the last 30 days, starting from the first day of the cointegration period, and take cumulative sum of the residuals over a rolling window of 30 days, using Equation~\ref{eq:cumulative_residual}. This gives us a time-series of cumulative residuals for each asset, which we use as the input to the model. The input takes the form:
 \begin{equation}
     x_i = \begin{pmatrix}
         \epsilon_{i,t-L} & \epsilon_{i,t-L-1} & \ldots & \epsilon_{i,t}
@@ -235,7 +252,7 @@ We gather the log of the cumulative returns of the entire set of assets, using E
 
 where $x_i$ is the input for asset $i$, $\epsilon_{i,t-L}$ is the residual of asset $i$ at time $t-L$, $t$ is the current time within the cointegration period, and $L$ is the length of the rolling window. 
 \\
-The input is a concantenation of the cumulative residuals for all assets, and takes the form of a matrix $x$ of size $N \times L$, where $N$ is the number of assets and $L$ is the length of the rolling window. The input is a matrix of size $N \times L$, and takes the form:
+The input is a concatenation of the cumulative residuals for all assets, and takes the form of a matrix $x$ of size $N \times L$, where $N$ is the number of assets and $L$ is the length of the rolling window. The input is a matrix of size $N \times L$, and takes the form:
 
 \begin{equation}
     x = \begin{pmatrix}
@@ -246,7 +263,33 @@ The input is a concantenation of the cumulative residuals for all assets, and ta
 
 The 30-day cumulative residuals is as a rolling window, sliding one day at a time across the the cointegration period. Therefore, the total number of inputs (data-points) for a single cointegration period is $T - L$, where $T$ is the total number of days in the cointegration period.
 
-\vspace{20pt}
+% \vspace{20pt}
+
+
+
+
+\subsection*{Architecture:}
+\begin{itemize}
+    \item CNN+(Transforer)+FFN
+    \item 2 Layers of CNN 1D with RELU Activation
+    \item Transformer component in the  (can be turned off)
+    \item FFN which ouput the learned underlying feature of the data into a vector the same size of the number of countries in the dataset, and soft normalised for constructing the portfolio.
+\end{itemize}
+
+\begin{table}[htpb]
+    \centering
+    \begin{tabular}{c|c}
+        Data & Architecture \\ 
+        \hline \hline 
+        Price Data Only & CNN + FNN \\ 
+        Price Data + Weather Data & CNN + FNN \\ 
+        Price Data Only & CNN + Transformer + FNN \\ 
+        Price Data + Weather Data & CNN + Transformer + FNN \\
+        \hline \hline 
+    \end{tabular}
+    \caption{Caption}
+    \label{tab:my_label}
+\end{table}
 
 \subsection*{Model Outputs}
 
@@ -258,13 +301,28 @@ These weights are then multiplied by the price of the assets one day after the e
 
 The set of inputs creates a set of next-day returns, which are then used to calculate the Sharpe ratio of the model's performance for that cointegration period. The Sharpe ratio is calculated using Equation~\ref{eq:sharpe_ratio}, and the negative of the Sharpe ratio is used as the loss function for the model.
 
-
-\subsection{CNN+FFN}
-As an initial model, we implemented a simple CNN+FNN model. 
-
-\subsection{CNN+Tranformer+FFN}
+% \subsection{CNN+Tranformer+FFN}
 
  \clearpage
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Results
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \section{Results}
+
+ \clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Discussion
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+ \section{Discussion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
