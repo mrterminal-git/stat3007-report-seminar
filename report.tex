@@ -284,60 +284,10 @@ Now Filip will talk about the model and training workflow
 \section{Models}
 \subsection*{Input Preperation}
 
-We prepare the input data for the model using the following steps:
+We prepare the input data for the model by first segmenting the full historical dataset (2015–2024) into \textit{cointegration windows} of 365 days, rolling forward every 182 days. Within each cointegration window, we carry out several steps. First, we compute the \textbf{log cumulative returns} for each asset \( n \), as defined in Equation~\eqref{eq:log_cumulative_return}, producing a return matrix \( \mathbf{R} \in \mathbb{R}^{N \times T} \) from the input price matrix \( \mathbf{P} \in \mathbb{R}^{N \times T} \). Second, we calculate the \textbf{cointegration residuals} by regressing each asset’s log cumulative returns against those of all other assets, following Equation~\eqref{eq:cointegration_all}, resulting in a residual matrix \( \boldsymbol{\varepsilon} \in \mathbb{R}^{N \times T} \). Third, we generate \textbf{cumulative residuals} by sliding a fixed-length window of 30 days (i.e., \( L = 30 \)) across time one day at a time within each cointegration window. For each start index \( t_i \), we compute a sequence of cumulative residuals over the next 30 days using all asset residuals, as defined in Equation~\eqref{eq:cumulative_residual}. Each such sequence is normalized to have zero mean and unit variance, yielding an input tensor \( \mathbf{x} \in \mathbb{R}^{N \times L} \). If weather data is included, it is concatenated channel-wise to form \( \mathbf{x}_{\text{aug}} \in \mathbb{R}^{(N + W) \times L} \), where \( W \) denotes the number of weather features (e.g., temperature, wind, precipitation). Finally, we define the \textbf{next-day return target} \( \mathbf{y}_t \in \mathbb{R}^N \) for each residual window ending at time \( t \), calculated as \( \mathbf{y}_t = \frac{\mathbf{P}_{t+1}}{\mathbf{P}_0} \), where \( \mathbf{P}_{t+1} \) is the price vector of the next day and \( \mathbf{P}_0 \) is the price at the start of the cointegration window.
+\noindent
+The flowchart of the input preparation pipeline is illustrated in Figure~\ref{fig:input_preparation_pipeline} and a graphical example involving three European countries is illustrated in Figure~\ref{fig:data_preparation_pipeline}.
 
-\subsubsection*{Create cointegration windows:}
-\begin{itemize}
-    \item The full historical dataset (2015–2024) is segmented into \textbf{cointegration windows} of 365 days, rolling forward every 182 days.
-\end{itemize}
-
-\subsubsection*{Within each cointegration window:}
-
-\begin{enumerate}
-    \item \textbf{Log Cumulative Returns}:
-    \begin{itemize}
-        \item For each asset $n$, calculate the log cumulative returns as defined in Equation~\eqref{eq:log_cumulative_return}.
-        \item Shapes:
-        \begin{itemize}
-            \item Input price matrix: $P \in \mathbb{R}^{N \times T}$
-            \item Output return matrix: $R \in \mathbb{R}^{N \times T}$
-        \end{itemize}
-    \end{itemize}
-
-    \item \textbf{Cointegration Residuals}:
-    \begin{itemize}
-        \item Compute residuals by regressing each asset’s returns on all others, as defined in Equation~\eqref{eq:cointegration_all}.
-        \item Output shape: $\varepsilon \in \mathbb{R}^{N \times T}$
-    \end{itemize}
-
-    \item \textbf{Cumulative Residuals (Window Length $L = 30$)}:
-    \begin{itemize}
-        \item Within each cointegration window, we slide a fixed-length window of 30 days across time \textbf{one day at a time} to construct the model input.
-        
-        \item For each starting index $t_i$, we compute a sequence of cumulative sums over the next 30 days, as defined in Equation~\eqref{eq:cumulative_residual}:
-
-                \item One input to the model:
-        \[
-        \mathbf{x} \in \mathbb{R}^{N \times L}
-        \quad \text{(cumulative residuals across $N$ assets and $L = 30$ days)}
-        \]
-
-        \item If weather data is used, it is concatenated channel-wise:
-        \[
-        \mathbf{x}_{\text{aug}} \in \mathbb{R}^{(N + W) \times L}
-        \]
-        where $W$ is the number of weather features (e.g., temperature, wind, precipitation).
-    \end{itemize}
-
-    \item \textbf{Next-Day Return Target}:
-    \begin{itemize}
-        \item For each residual window ending at day $t$, define the next-day return target as:
-        \[
-        \mathbf{y}_t = \mathbf{r}_t = \mathbf{R}_{t+1} \in \mathbb{R}^N
-        \]
-        where $\mathbf{R}_{t+1}$ is defined by Equation~\eqref{eq:log_cumulative_return_vector}.
-    \end{itemize}
-\end{enumerate}
 
 \subsection*{Architecture:}
 \begin{itemize}
@@ -371,6 +321,18 @@ These weights are then multiplied by the price of the assets one day after the e
 \\
 
 The set of inputs creates a set of next-day returns, which are then used to calculate the Sharpe ratio of the model's performance for that cointegration period. The Sharpe ratio is calculated using Equation~\ref{eq:sharpe_ratio}, and the negative of the Sharpe ratio is used as the loss function for the model.
+
+
+\section*{List of Good Things To Add}
+\begin{itemize}
+    \item Check that portfolio returns are calculated correctly during training - make sure it uses $\frac{P_t}{P_0}$ not $\ln\left(\frac{P_t}{P_0}\right)$
+    \item Write a method to save the model once they are trained, so that we can use them later to evaluate the performance of the model
+    \item Write the code to interpret the CNN layers, plot the graphs, analyse the results, and include in the report
+    \item Refactor the code so that it prints the batches mean and variance of the portfolio returns
+    \item Include the results of the model in the report, including the train/eval curve (Sharpe Ratio) with the mean and variance of the portfolio returns on the same graphical
+    \item Include a plot of cumulative portfolio returns for each model, using the evaluation and test set.
+    \item Include Sharpe Ratio for each model, for the evaluation and test set.
+\end{itemize}
 
 % \subsection{CNN+Tranformer+FFN}
 
@@ -414,6 +376,15 @@ The set of inputs creates a set of next-day returns, which are then used to calc
     \includegraphics[width=0.8\textwidth]{figures/input_preparation_pipeline.drawio.png}
     \caption{Input Preparation Pipeline for Deep Learning Model}
     \label{fig:input_preparation_pipeline}
+\end{figure}
+
+%Input pdf figure of data preparation pipeline
+\begin{figure}[t]
+    \centering
+    \hspace*{-12.2cm} % Move 3cm to the left
+    \includegraphics[width=2.35\textwidth]{figures/input_preparation_pipeline_example.pdf}
+    \caption{Data Preparation Pipeline for Deep Learning Model}
+    \label{fig:data_preparation_pipeline}
 \end{figure}
 
 \clearpage
